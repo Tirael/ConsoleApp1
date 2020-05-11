@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ConsoleApp1.Interfaces;
-using ConsoleApp1.Models;
-using ConsoleApp1.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using TestApp.Common.Interfaces;
+using TestApp.Common.Models;
+using TestApp.Common.Providers;
 
 namespace ConsoleApp1
 {

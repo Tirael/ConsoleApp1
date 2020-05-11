@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Newtonsoft.Json;
 
-namespace ConsoleApp1.Models
+namespace TestApp.Common.Models
 {
     [DebuggerDisplay("ArtistId:{ArtistId}, ArtistName:{ArtistName}, CollectionName:{CollectionName}")]
     public class AlbumLookupEntry

@@ -1,0 +1,149 @@
+﻿<UserControl
+    x:Class="WpfApp1.Views.SelectedAlbumView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviors="clr-namespace:WpfApp1.Behaviors"
+    xmlns:converters="clr-namespace:WpfApp1.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseNullToVisibilityConverter x:Key="InverseNullToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Margin="2,2,4,2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Source="{Binding SelectedItem.Artwork.Value, Mode=OneWay, TargetNullValue={x:Null}}"
+                Stretch="Uniform" />
+            <Border
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Margin="2,2,4,2"
+                Visibility="{Binding SelectedItem, Converter={StaticResource InverseNullToVisibilityConverter}}">
+                <mah:ProgressRing Visibility="{Binding SelectedItem.Artwork.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Border>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Text="{Binding SelectedItem.CollectionName, Mode=OneWay}"
+                TextAlignment="Left" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Text="{Binding SelectedItem.ReleaseDate, Mode=OneWay, StringFormat=ReleaseDate: {0:yyyy/MM/dd}}"
+                TextAlignment="Left" />
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Text="{Binding SelectedItem.TrackCount, Mode=OneWay, StringFormat=Tracks: {0}}"
+                TextAlignment="Left" />
+        </Grid>
+
+        <ListView
+            Grid.Row="1"
+            Margin="4,4,4,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="False"
+            IsSynchronizedWithCurrentItem="True"
+            ItemsSource="{Binding AllTracks, Mode=OneWay}"
+            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+            ScrollViewer.IsDeferredScrollingEnabled="True"
+            ScrollViewer.PanningMode="VerticalOnly"
+            SelectedItem="{Binding SelectedTrack}"
+            SelectionMode="Single"
+            ToolTipService.Placement="Top"
+            VirtualizingStackPanel.IsVirtualizing="True"
+            VirtualizingStackPanel.VirtualizationMode="Recycling">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Text="{Binding TrackName, Mode=OneWay}"
+                        TextAlignment="Left" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style x:Key="ListTooltipTextItemStyle" TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="2" />
+                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="TextAlignment" Value="Left" />
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Style="{StaticResource ListTooltipTextItemStyle}"
+                                    Text="{Binding CollectionName}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Style="{StaticResource ListTooltipTextItemStyle}"
+                                    Text="{Binding DiscNumber, StringFormat=Disc: {0}}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Style="{StaticResource ListTooltipTextItemStyle}"
+                                    Text="{Binding TrackNumber, StringFormat=Track: {0}}" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Style="{StaticResource ListTooltipTextItemStyle}"
+                                    Text="{Binding TrackName}" />
+                            </Grid>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <b:Interaction.Behaviors>
+                <behaviors:ScrollIntoViewForListView />
+            </b:Interaction.Behaviors>
+        </ListView>
+    </Grid>
+</UserControl>

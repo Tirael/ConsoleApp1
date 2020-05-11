@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Newtonsoft.Json;
 
-namespace ConsoleApp1.Models
+namespace TestApp.Common.Models
 {
     [DebuggerDisplay("ResultCount:{ResultCount}")]
     public class ApiResponse<T> where T : class
