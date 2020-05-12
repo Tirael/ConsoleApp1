@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using TestApp.Common.Models;
 
 namespace WpfApp1.ViewModels
@@ -9,13 +8,8 @@ namespace WpfApp1.ViewModels
     public class AlbumTracksSearchEntryViewModel
     {
         private readonly AlbumTracksSearchEntry _model;
-
-        public static async Task<AlbumTracksSearchEntryViewModel> CreateAsync(AlbumTracksSearchEntry model)
-        {
-            return new AlbumTracksSearchEntryViewModel(model);
-        }
-
-        private AlbumTracksSearchEntryViewModel(AlbumTracksSearchEntry model)
+        
+        public AlbumTracksSearchEntryViewModel(AlbumTracksSearchEntry model)
         {
             _model = model;
         }

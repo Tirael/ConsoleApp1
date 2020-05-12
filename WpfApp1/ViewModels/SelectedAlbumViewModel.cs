@@ -97,14 +97,10 @@ namespace WpfApp1.ViewModels
 
             var albums = await _musicInfoProvider.GetAllMusicTracks(collectionId, token);
 
-            var tasks = albums
+            return albums
                 .OrderBy(x => x.DiscNumber)
                 .ThenBy(x => x.TrackNumber)
-                .Select(async x => await AlbumTracksSearchEntryViewModel.CreateAsync(x));
-
-            var result = await Task.WhenAll(tasks);
-
-            return result;
+                .Select(x => new AlbumTracksSearchEntryViewModel(x));
         }
     }
 }

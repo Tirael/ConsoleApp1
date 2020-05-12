@@ -295,13 +295,9 @@ namespace WpfApp1.ViewModels
         {
             var albums = await _musicInfoProvider.GetAllAlbums(searchString, token);
 
-            var tasks = albums
+            return albums
                 .OrderBy(x => x.ReleaseDate)
-                .Select(async x => await AlbumLookupEntryViewModel.CreateAsync(x, _imageProvider));
-
-            var result = await Task.WhenAll(tasks);
-
-            return result;
+                .Select(x => new AlbumLookupEntryViewModel(x, _imageProvider));
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using TestApp.Common.Models;
 using WpfApp1.Interfaces;
 
@@ -14,25 +11,17 @@ namespace WpfApp1.ViewModels
     {
         private readonly AlbumLookupEntry _model;
 
-        public static async Task<AlbumLookupEntryViewModel> CreateAsync(AlbumLookupEntry model, IImageProvider imageProvider)
-        {
-            return new AlbumLookupEntryViewModel(model, imageProvider);
-        }
-
-        private AlbumLookupEntryViewModel(AlbumLookupEntry model, IImageProvider imageProvider)
+        public AlbumLookupEntryViewModel(AlbumLookupEntry model, IImageProvider imageProvider)
         {
             _model = model;
-            
-            Uri uri =  model.ArtworkUrl100 ?? model.ArtworkUrl60 ?? model.ArtworkUrl30;
-            
-            Application.Current.Dispatcher.BeginInvoke(() =>
-            {
-                Artwork = new LazyProperty<BitmapImage>(
-                    async cancelToken => await imageProvider
-                        .GetImage(uri, cancelToken)
-                        .ConfigureAwait(true),
-                    new BitmapImage());
-            });
+
+            Uri uri = model.ArtworkUrl100 ?? model.ArtworkUrl60 ?? model.ArtworkUrl30;
+
+            Artwork = new LazyProperty<BitmapImage>(
+                async cancelToken => await imageProvider
+                    .GetImage(uri, cancelToken)
+                    .ConfigureAwait(true),
+                new BitmapImage());
         }
 
         #region Properties
