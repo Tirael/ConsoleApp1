@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1.Extensions
+namespace TestApp.Common.Extensions
 {
-    public static class AsyncHelper
+    public static class AsyncEx
     {
         public static async Task<T> Retry<T>(this Func<Task<T>> task, int retries, TimeSpan delay,
             CancellationToken cts = default) =>

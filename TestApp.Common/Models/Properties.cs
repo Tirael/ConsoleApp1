@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ConsoleApp1.Models
+namespace TestApp.Common.Models
 {
     [JsonObject("Properties")]
     public class Properties
