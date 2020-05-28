@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 using EasyCaching.Core;
 using Microsoft.Extensions.Logging;
 using RestSharp;
+using TestApp.Common.Interfaces;
 using WpfApp1.Interfaces;
 
 namespace WpfApp1.Providers
@@ -16,9 +17,9 @@ namespace WpfApp1.Providers
         private readonly ILogger<IImageProvider> _logger;
         private static readonly double ExpirationCacheInMinutes = TimeSpan.FromDays(1).TotalMinutes;
 
-        public ImageProvider(IEasyCachingProvider cachingProvider, ILogger<IImageProvider> logger)
+        public ImageProvider(IImagesCachingProvider cachingProvider, ILogger<IImageProvider> logger)
         {
-            _cachingProvider = cachingProvider;
+            _cachingProvider = (IEasyCachingProvider) cachingProvider;
             _logger = logger;
         }
 
