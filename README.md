@@ -1,3 +1,6 @@
+[![Build status](https://img.shields.io/appveyor/ci/tirael/consoleapp1/master)](https://ci.appveyor.com/project/tirael/consoleapp1/branch/master)
+[![CodeFactor](https://www.codefactor.io/repository/github/tirael/consoleapp1/badge/master)](https://www.codefactor.io/repository/github/tirael/consoleapp1/overview/master)
+
 # Задание
 Нужно написать консольное приложение поиска музыкальных альбомов исполнителя.
 

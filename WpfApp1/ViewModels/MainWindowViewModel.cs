@@ -89,7 +89,7 @@ namespace WpfApp1.ViewModels
         {
             WindowTitle = null == selectedItem ? "Artist not found" : $"{selectedItem.ArtistName}: {selectedItem.CollectionName}";
 
-            if (null == selectedItem) _audioPlayer.SetTrack(null);
+            if (selectedItem == null) _audioPlayer.SetTrack(null);
 
             eventAggregator
                 .GetEvent<AlbumSelectedEvent>()

@@ -18,7 +18,6 @@ namespace WpfApp1.Behaviors
             base.OnDetaching();
 
             AssociatedObject.SelectionChanged -= AssociatedObject_SelectionChanged;
-
         }
 
         void AssociatedObject_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -33,7 +32,7 @@ namespace WpfApp1.Behaviors
             {
                 listView.UpdateLayout();
 
-                if (null == listView.SelectedItem)
+                if (listView.SelectedItem == null)
                     return;
 
                 listView.ScrollIntoView(listView.SelectedItem);

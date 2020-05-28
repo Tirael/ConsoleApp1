@@ -39,7 +39,7 @@ namespace WpfApp1.ViewModels
             this.ObservableForProperty(x => x.SelectedTrack)
                 .Throttle(TimeSpan.FromMilliseconds(50), RxApp.TaskpoolScheduler)
                 .Select(x => x.Value)
-                .Where(x => null != x)
+                .Where(x => x != null)
                 .ObserveOn(RxApp.TaskpoolScheduler)
                 .Select(x => x.PreviewUrl)
                 .Subscribe(x => eventAggregator
@@ -92,7 +92,7 @@ namespace WpfApp1.ViewModels
         private async Task<IEnumerable<AlbumTracksSearchEntryViewModel>> GetAllMusicTracks(long collectionId,
             CancellationToken token)
         {
-            if (0 == collectionId)
+            if (collectionId == 0)
                 return Enumerable.Empty<AlbumTracksSearchEntryViewModel>();
 
             var albums = await _musicInfoProvider.GetAllMusicTracks(collectionId, token);
