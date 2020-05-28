@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -75,10 +77,19 @@ namespace WpfApp1
 
             _logger.LogInformation($"file to play: {_uriToPlay.AbsoluteUri}, total time: {mf.TotalTime}");
 
+            StartFaderOnEndingTrack(mf.TotalTime);
+
             _outputAudioDevice = new WaveOutEvent();
             _outputAudioDevice.PlaybackStopped += OutputAudioDeviceOnPlaybackStopped;
             _outputAudioDevice.Init(_fadeInOutSampleProvider);
             _outputAudioDevice.Play();
+        }
+        
+        private void StartFaderOnEndingTrack(TimeSpan totalTime)
+        {
+            Observable
+                .Timer(totalTime.Add(TimeSpan.FromMilliseconds(-FadeInOutInMs)))
+                .Subscribe(_ => Stop());
         }
 
         private async Task PausePlayer()
