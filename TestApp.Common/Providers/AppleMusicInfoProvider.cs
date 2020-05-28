@@ -75,7 +75,7 @@ namespace TestApp.Common.Providers
             await _cachingProvider.SetAsync(searchString, searchResponse.Results,
                 TimeSpan.FromMinutes(ExpirationCacheInMinutes));
 
-            return searchResponse.Results.Where(x => null != x.CollectionId);
+            return searchResponse.Results.Where(x => x.CollectionId != null);
         }
 
         private async Task<IEnumerable<AlbumTracksSearchEntry>> GetAllMusicTracksInternal(string searchString,
@@ -96,7 +96,7 @@ namespace TestApp.Common.Providers
             await _cachingProvider.SetAsync(searchString, searchResponse.Results,
                 TimeSpan.FromMinutes(ExpirationCacheInMinutes));
 
-            return searchResponse.Results.Where(x => null != x.TrackId);
+            return searchResponse.Results.Where(x => x.TrackId != null);
         }
     }
 }
