@@ -19,9 +19,9 @@ namespace TestApp.Common.Providers
         private readonly ILogger<IMusicInfoProvider> _logger;
         private static readonly double ExpirationCacheInMinutes = TimeSpan.FromDays(1).TotalMinutes;
 
-        public AppleMusicInfoProvider(IEasyCachingProvider cachingProvider, ILogger<IMusicInfoProvider> logger)
+        public AppleMusicInfoProvider(IMusicInfosCachingProvider cachingProvider, ILogger<IMusicInfoProvider> logger)
         {
-            _cachingProvider = cachingProvider;
+            _cachingProvider = (IEasyCachingProvider)cachingProvider;
             _logger = logger;
         }
 
